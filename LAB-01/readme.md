@@ -74,11 +74,14 @@
 | 
 
 ### Конфигурация устройств
-#### Spine01
+#### pd01-clf-001
 ```
-interface Ethernet1  
-   no switchport  
-   ip address 172.16.0.11/31  
+interface Ethernet1/1
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.0/31
+
 interface Ethernet2  
    no switchport  
    ip address 172.16.0.15/31
