@@ -82,14 +82,49 @@ interface Ethernet1/1
   medium p2p
   ip address 172.16.1.0/31
 
-interface Ethernet2  
-   no switchport  
-   ip address 172.16.0.15/31
-interface Ethernet3  
-   no switchport  
-   ip address 172.16.0.19/31  
-interface Loopback1  
-   ip address 10.0.1.1/32 
+interface Ethernet1/2
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.2/31
+
+interface Ethernet1/3
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.1.4/31
+
+interface Ethernet1/4
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.1.6/31
+
+interface Ethernet1/5
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.1.8/31
+
+interface Ethernet1/6
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.1.10/31
+
+interface Ethernet1/7
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.1.12/31
+
+interface Ethernet1/8
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.1.14/31
+ 
+ 
 ``` 
 #### Spine02
 ```
