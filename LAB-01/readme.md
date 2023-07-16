@@ -126,95 +126,240 @@ interface Ethernet1/8
  
  
 ``` 
-#### Spine02
+#### pd01-clf-002
 ```
-interface Ethernet1  
-   no switchport  
-   ip address 172.16.0.13/31 
-interface Ethernet2  
-   no switchport  
-   ip address 172.16.0.17/31  
-interface Ethernet3  
-   no switchport  
-   ip address 172.16.0.21/31  
-interface Loopback1  
-   ip address 10.0.2.1/32 
+interface Ethernet1/1
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.4/31
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip address 172.16.2.6/31
+
+interface Ethernet1/3
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.2.0/31
+
+interface Ethernet1/4
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.2.2/31
+
+interface Ethernet1/5
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.2.8/31
+
+interface Ethernet1/6
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.2.10/31
+
+interface Ethernet1/7
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.2.12/31
+
+interface Ethernet1/8
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.2.14/31
+
 ```
-#### Leaf01
+#### pd01-elf-001
 ```
-vlan 10  
-interface Ethernet1  
-   no switchport  
-   ip address 172.16.0.10/31  
-interface Ethernet2  
-   no switchport  
-   ip address 172.16.0.12/31  
-interface Ethernet3  
-   switchport access vlan 10  
-   spanning-tree portfast  
-interface Loopback1  
-   ip address 10.1.1.1/32  
-interface Vlan10  
-   ip address 10.1.10.1/24  
+interface Ethernet1/1
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.1/31
+
+
+interface Ethernet1/2
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.3/31
+
+
+interface Ethernet1/3
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.1/31
+
+
+interface Ethernet1/4
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.3/31
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.1/31
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.3/31
+
+
+
 ```
-#### Leaf02
+#### pd01-elf-002
 ```
-vlan 20  
-interface Ethernet1  
-   no switchport  
-   ip address 172.16.0.14/31  
-interface Ethernet2  
-   no switchport  
-   ip address 172.16.0.16/31  
-interface Ethernet3  
-   switchport access vlan 20  
-   spanning-tree portfast  
-interface Loopback1  
-   ip address 10.1.2.1/32 
-interface Vlan20  
-   ip address 10.2.20.1/24  
+interface Ethernet1/1
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.5/31
+
+
+interface Ethernet1/2
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.7/31
+
+
+interface Ethernet1/3
+  description p01-cfl-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.5/31
+
+
+interface Ethernet1/4
+  description p01-cfl-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.7/31
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.5/31
+
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.7/31
+
+
 ```
-#### Leaf03
+#### pd01-elf-003
 ```
-vlan 30  
-interface Ethernet1  
-   no switchport  
-   ip address 172.16.0.18/31  
-interface Ethernet2  
-   no switchport  
-   ip address 172.16.0.20/31  
-interface Ethernet3  
-   switchport access vlan 30  
-   spanning-tree portfast  
-interface Ethernet4  
-   switchport access vlan 30  
-   spanning-tree portfast  
-interface Vlan30  
-   ip address 10.3.30.1/24 
-``` 
-#### PC1
+interface Ethernet1/1
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.9/31
+
+
+interface Ethernet1/2
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.11/31
+
+
+interface Ethernet1/3
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.9/31
+
+
+interface Ethernet1/4
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.11/31
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.9/31
+
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.11/31
+
+
+
 ```
-IP/MASK: 10.1.10.2/24  
-GATEWAY: 10.1.10.1
-```  
-#### PC2
+#### pd01-elf-004
 ```
-IP/MASK: 10.2.20.2/24  
-GATEWAY: 10.2.20.1
-```  
-#### PC3
+interface Ethernet1/1
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.13/31
+
+
+interface Ethernet1/2
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.15/31
+
+
+interface Ethernet1/3
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.13/31
+
+
+interface Ethernet1/4
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.15/31
+
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.13/31
+
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.15/31
+
+
+
 ```
-IP/MASK: 10.3.30.2/24  
-GATEWAY: 10.3.30.1  
-```
-#### PC4
-```
-IP/MASK: 10.3.30.3/24  
-GATEWAY: 10.3.30.1 
-``` 
-#### PC5
-#### PC6
-123245
-#### PC7
-#### PC8
-#### PC8
+
+
+### PS 
+Решил добавить больше утсройств и резервные линки для эксплуатации в будущих схемах, и с гитом пока на ВЫ так что без картинок прошу простить.
