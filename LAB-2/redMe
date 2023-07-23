@@ -1,4 +1,634 @@
-1
+
+### Схема CLOS
+### Цели
+1. Настроить OSPF в Underlay сети, для IP связанности между всеми устройствами NXOS
+2. Описать пути взаиводействия 
+
+### Конфигурация устройств
+#### pd01-clf-001
+```
+feature ospf
+router ospf M9
+  router-id 1.1.1.1
+
+
+interface Ethernet1/1
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.0/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/2
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.2/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/3
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.1.4/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/4
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.1.6/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/5
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.1.8/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/6
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.1.10/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/7
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.1.12/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/8
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.1.14/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+ 
+ 
+``` 
+#### pd01-clf-002
+```
+
+router ospf M9
+  router-id 2.2.2.2
+
+
+interface Ethernet1/1
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.4/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/2
+  no switchport
+  medium p2p
+  ip address 172.16.2.6/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/3
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.2.0/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/4
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.2.2/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/5
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.2.8/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/6
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.2.10/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/7
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.2.12/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/8
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.2.14/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+```
+
+#### pd01-clf-003
+```
+
+router ospf M9
+  router-id 3.3.3.3
+
+
+interface Ethernet1/1
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.3.4/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/2
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.3.6/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/3
+   description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.8/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/4
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.10/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/5
+ description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.3.0/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/6
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.3.2/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+interface Ethernet1/7
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.3.12/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+interface Ethernet1/8
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.3.14/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+  no shutdown
+
+
+```
+#### pd01-elf-001
+```
+router ospf M9
+  router-id 11.11.11.11
+
+interface Ethernet1/1
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.1/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/2
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.3/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/3
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.1/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/4
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.3/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.1/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.3/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+
+```
+#### pd01-elf-002
+```
+router ospf M9
+  router-id 22.22.22.22
+
+interface Ethernet1/1
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.5/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/2
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.7/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/3
+  description p01-cfl-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.5/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/4
+  description p01-cfl-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.7/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.5/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.7/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+```
+#### pd01-elf-003
+```
+
+router ospf M9
+  router-id 33.33.33.33
+
+interface Ethernet1/1
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.9/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/2
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.11/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/3
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.9/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/4
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.11/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.9/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.11/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+
+```
+#### pd01-elf-004
+```
+
+router ospf M9
+  router-id 44.44.44.44
+
+interface Ethernet1/1
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.13/31
+  ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+
+interface Ethernet1/2
+  description pd01-clf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.15/31
+   ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/3
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.13/31
+   ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/4
+  description pd01-clf-002
+  no switchport
+  medium p2p
+  ip address 172.16.2.15/31
+   ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+
+interface Ethernet1/5
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.13/31
+   ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+
+interface Ethernet1/6
+  description pd01-clf-003
+  no switchport
+  medium p2p
+  ip address 172.16.3.15/31
+   ip ospf authentication message-digest
+  ip ospf message-digest-key 42 md5 3 3ecb2bb803bf79ad
+  ip router ospf M9 area 0.0.0.0
+
+```
+
+### Вывод  команд проверки 
+#### pd01-clf-001
+```
+pd01-clf-001# sh ip ospf neighbors
+ OSPF Process ID M9 VRF default
+ Total number of neighbors: 8
+ Neighbor ID     Pri State            Up Time  Address         Interface
+ 11.11.11.11       1 FULL/ -          00:26:35 172.16.1.1      Eth1/1
+ 11.11.11.11       1 FULL/ -          00:26:33 172.16.1.3      Eth1/2
+ 22.22.22.22       1 FULL/ -          00:26:07 172.16.1.5      Eth1/3
+ 22.22.22.22       1 FULL/ -          00:26:06 172.16.1.7      Eth1/4
+ 33.33.33.33       1 FULL/ -          00:25:40 172.16.1.9      Eth1/5
+ 33.33.33.33       1 FULL/ -          00:25:40 172.16.1.11     Eth1/6
+ 44.44.44.44       1 FULL/ -          00:25:17 172.16.1.13     Eth1/7
+ 44.44.44.44       1 FULL/ -          00:25:16 172.16.1.15     Eth1/8
+
+pd01-clf-001# ping 10.0.2.1
+PING 10.0.2.1 (10.0.2.1): 56 data bytes
+--- 10.0.2.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 3.068/3.821/5.468 ms
+
+pd01-clf-001# ping 10.0.3.1
+PING 10.0.3.1 (10.0.3.1): 56 data bytes
+--- 10.0.3.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 5.077/7.062/8.897 ms
+```
+#### pd01-clf-002
+```
+pd01-clf-002# sh ip ospf neighbors
+ OSPF Process ID M9 VRF default
+ Total number of neighbors: 8
+ Neighbor ID     Pri State            Up Time  Address         Interface
+ 22.22.22.22       1 FULL/ -          00:30:26 172.16.2.5      Eth1/1
+ 22.22.22.22       1 FULL/ -          00:30:27 172.16.2.7      Eth1/2
+ 11.11.11.11       1 FULL/ -          00:30:54 172.16.2.1      Eth1/3
+ 11.11.11.11       1 FULL/ -          00:30:54 172.16.2.3      Eth1/4
+ 33.33.33.33       1 FULL/ -          00:29:59 172.16.2.9      Eth1/5
+ 33.33.33.33       1 FULL/ -          00:29:56 172.16.2.11     Eth1/6
+ 44.44.44.44       1 FULL/ -          00:29:35 172.16.2.13     Eth1/7
+ 44.44.44.44       1 FULL/ -          00:29:33 172.16.2.15     Eth1/8
+pd01-clf-002#
+
+pd01-clf-002# ping 10.0.1.1
+PING 10.0.1.1 (10.0.1.1): 56 data bytes
+--- 10.0.1.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 3.368/5.649/8.123 ms
+
+pd01-clf-002# ping 10.0.2.1
+PING 10.0.2.1 (10.0.2.1): 56 data bytes
+--- 10.0.2.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 0.211/0.353/0.72 ms
+```
+#### pd01-clf-003
+```
+pd01-clf-003# sh ip ospf neighbors
+ OSPF Process ID M9 VRF default
+ Total number of neighbors: 8
+ Neighbor ID     Pri State            Up Time  Address         Interface
+ 22.22.22.22       1 FULL/ -          00:32:17 172.16.3.5      Eth1/1
+ 22.22.22.22       1 FULL/ -          00:32:18 172.16.3.7      Eth1/2
+ 33.33.33.33       1 FULL/ -          00:31:49 172.16.3.9      Eth1/3
+ 33.33.33.33       1 FULL/ -          00:31:50 172.16.3.11     Eth1/4
+ 11.11.11.11       1 FULL/ -          00:32:46 172.16.3.1      Eth1/5
+ 11.11.11.11       1 FULL/ -          00:32:45 172.16.3.3      Eth1/6
+ 44.44.44.44       1 FULL/ -          00:31:25 172.16.3.13     Eth1/7
+ 44.44.44.44       1 FULL/ -          00:31:25 172.16.3.15     Eth1/8
+
+pd01-clf-003# ping 10.0.1.1
+PING 10.0.1.1 (10.0.1.1): 56 data bytes
+--- 10.0.1.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 3.151/3.895/5.731 ms
+
+pd01-clf-003# ping 10.0.2.1
+PING 10.0.2.1 (10.0.2.1): 56 data bytes
+--- 10.0.2.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0.00% packet loss
+round-trip min/avg/max = 3.177/4.037/5.23 ms
+```
 
 
 
