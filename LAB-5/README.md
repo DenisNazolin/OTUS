@@ -16,7 +16,7 @@ feature vn-segment-vlan-based
 feature nv overlay
 
 
-#### Нстройки под Vxlan
+#### Настройки под Vxlan
 
 hardware access-list tcam region racl 512
 hardware access-list tcam region arp-ether 256 double-wide
@@ -34,7 +34,7 @@ interface nve1
     suppress-arp
     ingress-replication protocol bgp
 
-#### настройка BGP 
+#### Настройка BGP 
 
 ip route 10.0.1.0/30 Null0
 
