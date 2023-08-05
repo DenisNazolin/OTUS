@@ -174,6 +174,95 @@ router bgp 65001
     address-family ipv4 unicast
 ```
 
+#### pd01-elf-01
+```
+#### Настройки под Vxlan
 
+hardware access-list tcam region racl 512
+hardware access-list tcam region arp-ether 256 double-wide
+
+vlan 1,10,20
+vlan 10
+  vn-segment 10010
+vlan 20
+  name 20
+  vn-segment 10020
+
+evpn
+  vni 10010 l2
+    rd 10.1.1.2:10010
+    route-target import 1:10010
+    route-target export 1:10010
+  vni 10020 l2
+    rd 10.1.1.2:10020
+    route-target import 1:10020
+    route-target export 1:10020
+
+interface Vlan1
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback1
+  member vni 10010
+    suppress-arp
+    ingress-replication protocol bgp
+  member vni 10020
+    suppress-arp
+    ingress-replication protocol bgp
+
+#### Настройка BGP 
+
+interface loopback1
+  ip address 10.1.1.2/32
+icam monitor scale
+
+
+router bgp 65002
+  router-id 10.1.1.1
+  bestpath as-path multipath-relax
+  address-family ipv4 unicast
+    network 10.1.1.1/32
+    network 10.1.1.2/32
+    maximum-paths 64
+  address-family l2vpn evpn
+    retain route-target all
+  template peer OVER
+    update-source loopback1
+    ebgp-multihop 20
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+  neighbor 10.0.1.2
+    inherit peer OVER
+    remote-as 65001
+    address-family l2vpn evpn
+  neighbor 10.0.2.2
+    inherit peer OVER
+    remote-as 65001
+    address-family l2vpn evpn
+  neighbor 10.0.3.2
+    inherit peer OVER
+    remote-as 65001
+    address-family l2vpn evpn
+  neighbor 172.16.1.0
+    remote-as 65001
+    address-family ipv4 unicast
+  neighbor 172.16.1.2
+    remote-as 65001
+    address-family ipv4 unicast
+  neighbor 172.16.2.0
+    remote-as 65001
+    address-family ipv4 unicast
+  neighbor 172.16.2.2
+    remote-as 65001
+    address-family ipv4 unicast
+  neighbor 172.16.3.0
+    remote-as 65001
+    address-family ipv4 unicast
+  neighbor 172.16.3.2
+    remote-as 65001
+    address-family ipv4 unicast
+```
 
 
