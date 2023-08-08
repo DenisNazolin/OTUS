@@ -1,0 +1,260 @@
+pd01-clf-01# sh run
+
+!Command: show running-config
+!Running configuration last done at: Mon Aug  7 13:54:06 2023
+!Time: Tue Aug  8 07:42:07 2023
+
+version 9.3(10) Bios:version
+hostname pd01-clf-01
+vdc pd01-clf-01 id 1
+  limit-resource vlan minimum 16 maximum 4094
+  limit-resource vrf minimum 2 maximum 4096
+  limit-resource port-channel minimum 0 maximum 511
+  limit-resource u4route-mem minimum 128 maximum 128
+  limit-resource u6route-mem minimum 96 maximum 96
+  limit-resource m4route-mem minimum 58 maximum 58
+  limit-resource m6route-mem minimum 8 maximum 8
+
+nv overlay evpn
+feature bgp
+feature fabric forwarding
+feature private-vlan
+feature interface-vlan
+feature vn-segment-vlan-based
+feature nv overlay
+
+username admin password 5 $5$CFMJBI$MFhkRBNXeagJSC9/fsMlKarFGcOaGQAA.2fk6/u9Lr4
+ role network-admin
+ip domain-lookup
+copp profile strict
+snmp-server user admin network-admin auth md5 207B3EFDFFBAB3C85600089BB1F96AF27B
+12 priv 204B61E8FEE6BFC743092D8CF4F67CD6204E localizedV2key
+rmon event 1 log trap public description FATAL(1) owner PMON@FATAL
+rmon event 2 log trap public description CRITICAL(2) owner PMON@CRITICAL
+rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
+rmon event 4 log trap public description WARNING(4) owner PMON@WARNING
+rmon event 5 log trap public description INFORMATION(5) owner PMON@INFO
+
+fabric forwarding anycast-gateway-mac 0002.0003.0001
+ip route 10.0.1.0/30 Null0
+vlan 1,10,20
+vlan 10
+  vn-segment 10010
+vlan 20
+  name 20
+  vn-segment 10020
+
+route-map LEAF permit 10
+  match as-number 65001-65999
+route-map NEXT_HOP permit 10
+  set ip next-hop unchanged
+vrf context PROD
+vrf context management
+hardware access-list tcam region racl 512
+hardware access-list tcam region arp-ether 256 double-wide
+
+
+interface Vlan1
+
+interface Ethernet1/1
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.0/31
+  no shutdown
+
+interface Ethernet1/2
+  description pd01-elf-001
+  no switchport
+  medium p2p
+  ip address 172.16.1.2/31
+  no shutdown
+
+interface Ethernet1/3
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.1.4/31
+  no shutdown
+
+interface Ethernet1/4
+  description pd01-elf-002
+  no switchport
+  medium p2p
+  ip address 172.16.1.6/31
+  no shutdown
+
+interface Ethernet1/5
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.1.8/31
+  no shutdown
+
+interface Ethernet1/6
+  description pd01-elf-003
+  no switchport
+  medium p2p
+  ip address 172.16.1.10/31
+  no shutdown
+
+interface Ethernet1/7
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.1.12/31
+  no shutdown
+
+interface Ethernet1/8
+  description pd01-elf-004
+  no switchport
+  medium p2p
+  ip address 172.16.1.14/31
+  no shutdown
+
+interface Ethernet1/9
+
+interface Ethernet1/10
+
+interface Ethernet1/11
+
+interface Ethernet1/12
+
+interface Ethernet1/13
+
+interface Ethernet1/14
+
+interface Ethernet1/15
+
+interface Ethernet1/16
+
+interface Ethernet1/17
+
+interface Ethernet1/18
+
+interface Ethernet1/19
+
+interface Ethernet1/20
+
+interface Ethernet1/21
+
+interface Ethernet1/22
+
+interface Ethernet1/23
+
+interface Ethernet1/24
+
+interface Ethernet1/25
+
+interface Ethernet1/26
+
+interface Ethernet1/27
+
+interface Ethernet1/28
+
+interface Ethernet1/29
+
+interface Ethernet1/30
+
+interface Ethernet1/31
+
+interface Ethernet1/32
+
+interface Ethernet1/33
+
+interface Ethernet1/34
+
+interface Ethernet1/35
+
+interface Ethernet1/36
+
+interface Ethernet1/37
+
+interface Ethernet1/38
+
+interface Ethernet1/39
+
+interface Ethernet1/40
+
+interface Ethernet1/41
+
+interface Ethernet1/42
+
+interface Ethernet1/43
+
+interface Ethernet1/44
+
+interface Ethernet1/45
+
+interface Ethernet1/46
+
+interface Ethernet1/47
+
+interface Ethernet1/48
+
+interface Ethernet1/49
+
+interface Ethernet1/50
+
+interface Ethernet1/51
+
+interface Ethernet1/52
+
+interface Ethernet1/53
+
+interface Ethernet1/54
+
+interface Ethernet1/55
+
+interface Ethernet1/56
+
+interface Ethernet1/57
+
+interface Ethernet1/58
+
+interface Ethernet1/59
+
+interface Ethernet1/60
+
+interface Ethernet1/61
+
+interface Ethernet1/62
+
+interface Ethernet1/63
+
+interface Ethernet1/64
+
+interface mgmt0
+  vrf member management
+
+interface loopback0
+  ip address 10.0.1.1/32
+
+interface loopback1
+  ip address 10.0.1.2/32
+icam monitor scale
+
+line console
+line vty
+boot nxos bootflash:/nxos.9.3.10.bin sup-1
+router bgp 65001
+  timers bgp 5 15
+  bestpath as-path multipath-relax
+  address-family ipv4 unicast
+    network 10.0.1.0/30
+    maximum-paths 64
+    maximum-paths ibgp 64
+  address-family l2vpn evpn
+    retain route-target all
+  neighbor 10.0.0.0/8 remote-as route-map LEAF
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+      route-map NEXT_HOP out
+  neighbor 172.16.0.0/16 remote-as route-map LEAF
+    address-family ipv4 unicast
+evpn
+  vni 10010 l2
+  vni 10020 l2
+
+no logging console
