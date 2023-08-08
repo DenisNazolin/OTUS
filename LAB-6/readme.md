@@ -583,6 +583,122 @@ router bgp 65005
 ### Вывод  команд проверки 
 #### pd01-clf-001
 ```
+pd01-elf-01# sh bgp l2vpn evpn summary
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.0.1.2        4 65001   12880   12843      448    0    0 11:32:13 14
+10.0.2.2        4 65001   12500   12461      448    0    0 11:32:12 16
+10.0.3.2        4 65001     723     710      448    0    0 00:39:08 14
+
+pd01-elf-01# sh bgp l2vpn evpn
+
+   Network            Next Hop            Metric     LocPrf     Weight Path
+Route Distinguisher: 10.0.2.1:32777
+*>e[3]:[0]:[32]:[10.0.2.2]/88
+                      10.0.2.2                                       0 65001 i
+
+Route Distinguisher: 10.0.2.1:32787
+*>e[3]:[0]:[32]:[10.0.2.2]/88
+                      10.0.2.2                                       0 65001 i
+
+Route Distinguisher: 10.1.1.2:10010    (L2VNI 10010)
+*>e[2]:[0]:[0]:[48]:[5000.000a.0000]:[0]:[0.0.0.0]/216
+                      10.4.4.5                                       0 65001 650
+05 i
+*>e[2]:[0]:[0]:[48]:[5000.000c.0000]:[0]:[0.0.0.0]/216
+                      10.3.3.4                                       0 65001 650
+04 i
+*>e[2]:[0]:[0]:[48]:[5000.000a.0000]:[32]:[192.168.10.42]/272
+                      10.4.4.5                                       0 65001 650
+05 i
+*>e[2]:[0]:[0]:[48]:[5000.000c.0000]:[32]:[192.168.10.1]/272
+                      10.3.3.4                                       0 65001 650
+04 i
+*>l[3]:[0]:[32]:[10.1.1.2]/88
+```
+#### pd01-elf-001
+```
+pd01-elf-01# sh bgp l2vpn evpn summary
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.0.1.2        4 65001   12913   12874      454    0    0 11:34:53 14
+10.0.2.2        4 65001   12533   12492      454    0    0 11:34:52 16
+10.0.3.2        4 65001     756     741      454    0    0 00:41:47 14
+
+
+pd01-elf-01# sh bgp l2vpn evpn
+
+   Network            Next Hop            Metric     LocPrf     Weight Path
+Route Distinguisher: 10.0.2.1:32777
+*>e[3]:[0]:[32]:[10.0.2.2]/88
+                      10.0.2.2                                       0 65001 i
+
+Route Distinguisher: 10.0.2.1:32787
+*>e[3]:[0]:[32]:[10.0.2.2]/88
+                      10.0.2.2                                       0 65001 i
+
+Route Distinguisher: 10.1.1.2:10010    (L2VNI 10010)
+*>e[2]:[0]:[0]:[48]:[5000.000a.0000]:[0]:[0.0.0.0]/216
+                      10.4.4.5                                       0 65001 650
+05 i
+*>e[2]:[0]:[0]:[48]:[5000.000c.0000]:[0]:[0.0.0.0]/216
+                      10.3.3.4                                       0 65001 650
+
+pd01-elf-01# sh mac address-table
+Legend:
+        * - primary entry, G - Gateway MAC, (R) - Routed MAC, O - Overlay MAC
+        age - seconds since last seen,+ - primary entry using vPC Peer-Link,
+        (T) - True, (F) - False, C - ControlPlane MAC, ~ - vsan
+   VLAN     MAC Address      Type      age     Secure NTFY Ports
+---------+-----------------+--------+---------+------+----+------------------
+*    1     5000.000e.0000   dynamic  0         F      F    Eth1/7
+C   10     5000.000a.0000   dynamic  0         F      F    nve1(10.4.4.5)
+C   10     5000.000c.0000   dynamic  0         F      F    nve1(10.3.3.4)
+C   20     5000.000b.0000   dynamic  0         F      F    nve1(10.4.4.5)
+*   20     5000.000e.0000   dynamic  0         F      F    Eth1/7
+*  999     5002.0000.1b08   static   -         F      F    Vlan999
+*  999     5004.0000.1b08   static   -         F      F    nve1(10.2.2.3)
+*  999     5005.0000.1b08   static   -         F      F    nve1(10.3.3.4)
+*  999     5006.0000.1b08   static   -         F      F    nve1(10.4.4.5)
+G    -     0003.0002.0001   static   -         F      F    sup-eth1(R)
+G    -     5002.0000.1b08   static   -         F      F    sup-eth1(R)
+G   20     5002.0000.1b08   static   -         F      F    sup-eth1(R)
+G  999     5002.0000.1b08   static   -         F      F    sup-eth1(R)
+
+#### Поднято соседство со всеми spine 
+
+так же вижу маки из влана управления всех leaf.
+```
+
+#### Оконечные устройства 
+```
+В качестве оконечных устройств взял циско роутеры.
+
+PC14
+GigabitEthernet0/0.20  192.168.20.2 
+
+PC14#ping 192.168.20.42
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.20.42, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 8/15/34 ms
+
+PC14#ping 192.168.10.42
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.10.42, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 9/12/17 ms
+PC14#ping 192.168.10.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.10.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 8/11/20 ms
+
+PC14#ping 192.168.30.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.30.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 9/14/25 ms
+
+есть связь со  всеми оконечными устройствами 
 
 
 
